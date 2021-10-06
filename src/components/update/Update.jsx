@@ -1,9 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Warning from '../warning/Warning';
 import './update.css';
-// import { update, remove } from "../../redux/userSlice";
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { update, remove } from '../../redux/userSlice';
+import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 // import { updateUser2 } from "../../redux/userSlice";
 
@@ -13,12 +12,15 @@ export default function Update() {
 	const user = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 
-	const handleClick = (e) => {
+	const handleUpdate = (e) => {
 		e.preventDefault();
 		// without API
-		// dispatch(update({ name, email }));
-		// with API
-		// dispatch(updateUser2({ name, email }));
+		dispatch(update({ name, email }));
+	};
+
+	const handleDelete = (e) => {
+		e.preventDefault();
+		dispatch(remove());
 	};
 
 	return (
@@ -26,7 +28,9 @@ export default function Update() {
 			<div className='updateWrapper'>
 				<h3 className='updateTitle'>Update Your Account</h3>
 				<Warning />
-				<button className='delete'>Delete Account</button>
+				<button className='delete' onClick={handleDelete}>
+					Delete Account
+				</button>
 				<div className='updateContainer'>
 					<form>
 						<div className='formItem'>
@@ -84,7 +88,7 @@ export default function Update() {
 						<button
 							disabled={user.pending}
 							className='updateButton'
-							onClick={handleClick}
+							onClick={handleUpdate}
 						>
 							Update
 						</button>
